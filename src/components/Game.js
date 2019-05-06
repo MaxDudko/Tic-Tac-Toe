@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Game.css';
+import './Game.scss';
 import Board from './Board';
 import calculateWinner from '../game_logic';
 
@@ -41,13 +41,23 @@ class Game extends Component {
     })
   }
 
+  newGame() {
+    this.setState({
+      history: [{
+        squares: Array(9).fill(null),
+      }],
+      stepNumber: 0,
+      xIsNext: true,
+    })
+  }
+
     render() {
       const history = this.state.history;
       const current = history[this.state.stepNumber];
       const winner = calculateWinner(current.squares);
 
       const moves = history.map((step, move) => {
-        const desc = move ? `Go to move #${move}` : `Go to game Start`;
+        const desc = `Go to move #${move}`;
         return(
           <li key={move}>
             <button onClick={() => this.jumpTo(move)}>{desc}</button>
@@ -69,10 +79,11 @@ class Game extends Component {
               squares={current.squares}
               onClick={(i) => this.handleClick(i)}
             />
+            <button className="newGame-btn" onClick={() => this.newGame()}>New Game</button>
           </div>
           <div className="game-info">
             <div>{status}</div>
-            <ol>{moves}</ol>
+            <ul>{moves}</ul>
           </div>
         </div>
       );

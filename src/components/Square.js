@@ -1,5 +1,5 @@
 import React from 'react';
-import './Square.css';
+import './Square.scss';
 
 const Square = props => (
   <button className="square" onClick={props.onClick}>
